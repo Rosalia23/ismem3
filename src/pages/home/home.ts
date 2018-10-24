@@ -8,22 +8,31 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class HomePage {
 
+  public base64Image : string;
+  public fotos : any;
+
   constructor(public navCtrl: NavController, private camera : Camera) {
+   this.fotos =[];
 
   }
 
   tomarFoto() {
 
-  	const options : CameraOptions = {
-  		destinationType : this.camera.DestinationType.DATA_URL,
-  		encondingType : this.camera.EncodingType.JPEG,
-  		mediaType : this.camera.MediaType.PICTURE
-  	}
-  	this.camera.getPicture(options).then((imageData) => {
-	 	let base64Image = 'data:image/jpeg;base64,' + imageData;
-	}, (err) => {
-		console.log(err)
-	});
+    const options : CameraOptions = {
+      destinationType: this.camera.DestinationType.DATA_URL,
+        encodingType: this.camera.EncodingType.JPEG,
+        mediaType: this.camera.MediaType.PICTURE,
+        quality:100,
+        allowEdit:true,
+        saveToPhotoAlbum:true,
+        cameraDirection:1
+    }
+    this.camera.getPicture(options).then((imageData) => {
+    this.base64Image = 'data:image/jpeg;base64,' + imageData;
+    this.fotos.pust(this.base64Image);
+  }, (err) => {
+    console.log(err)
+  });
 
   }
 
